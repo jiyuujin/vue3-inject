@@ -6,13 +6,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, provide } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+
+import useVersionKey from '@/composables/use-version-key'
+import useCounterKey from '@/composables/use-counter-key'
+import useIdentifer from '@/models/version'
+import useCounter from '@/models/counter'
 
 export default defineComponent({
   name: 'App',
   components: {
     HelloWorld
+  },
+  setup() {
+    provide(useVersionKey, useIdentifer())
+    provide(useCounterKey, useCounter())
   }
 })
 </script>

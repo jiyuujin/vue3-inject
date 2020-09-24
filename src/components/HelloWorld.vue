@@ -1,6 +1,12 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h2>
+      {{ version }}
+      <button style="margin: 0 4px" @click="increment">+</button>
+      <button style="margin: 0 4px" @click="decrement">-</button>
+      {{ state.count }}
+    </h2>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
       check out the
@@ -111,12 +117,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, inject } from 'vue'
+
+import useVersionKey from '@/composables/use-version-key'
+import useCounterKey from '@/composables/use-counter-key'
+import { IdentiferStore } from '@/models/version'
+import { CounterStore } from '@/models/counter'
 
 export default defineComponent({
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  setup() {
+    const { version } = inject(useVersionKey) as IdentiferStore
+    const { state, increment, decrement } = inject(
+      useCounterKey
+    ) as CounterStore
+    return { version, state, increment, decrement }
   }
 })
 </script>
